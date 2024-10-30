@@ -4,6 +4,7 @@ import SignUp from './pages/SignUp';
 import Login from './pages/Login';
 import Home from './pages/home';
 import Upload from './pages/upload';
+import CreateModel from './pages/create-model'
 
 function Header() {
   // 현재 페이지의 경로 정보를 얻기 위해 useLocation 훅을 사용
@@ -64,6 +65,9 @@ function App() {
 
           {/* 음성 업로드 페이지 경로 */}
           <Route path="/upload" element={<Upload />} />
+
+          {/* 모델 생성 페이지 경로 */}
+          <Route path="/create-model" element={<CreateModel />} />
         </Routes>
       </div>
     </Router>
