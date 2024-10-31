@@ -29,33 +29,32 @@ function CreateModel() {
     event.preventDefault();
     setError('');
     setSuccess('');
-
+    const token = localStorage.getItem('accessToken');
     // 데이터 유효성 검사
     const phonePattern = /^010-\d{4}-\d{4}$/;
     for (const phone of modelPhones) {
       if (!phonePattern.test(phone)) {
         setError('전화번호는 010-xxxx-xxxx 형식이어야 합니다.');
         return;
+      }else{
+        try {
+          const response = await axios.post('http://localhost:3000/models', {
+            detail,
+            modelPhones,
+          }, {
+            headers: {
+              'Authorization': `Bearer ${token}`,
+            },
+          });
+          
+          setSuccess('모델이 성공적으로 생성되었습니다.');
+          setResponseData(response.data); // 서버 응답 데이터 저장
+          console.log(response.data);
+        } catch (err) {
+          console.error('모델 생성 중 오류 발생:', err);
+          setError('모델 생성 중 오류가 발생했습니다.',err);
+        }
       }
-    }
-
-    try {
-        console.log(1321)
-      const response = await axios.post('http://localhost:3000/models', {
-        detail,
-        modelPhones,
-      }, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-
-      setSuccess('모델이 성공적으로 생성되었습니다.');
-      setResponseData(response.data); // 서버 응답 데이터 저장
-      console.log(response.data);
-    } catch (err) {
-      console.error('모델 생성 중 오류 발생:', err);
-      setError('모델 생성 중 오류가 발생했습니다.');
     }
   };
 
@@ -103,8 +102,9 @@ function CreateModel() {
           </button>
         )}
         <button type="submit" className="bg-green-500 text-white rounded px-4 py-2">
-          모델 생성
+          create
         </button>
+      </form>
         {error && <p className="text-red-500 mt-4">{error}</p>}
         {success && (
           <div className="text-green-500 mt-4">
@@ -119,7 +119,6 @@ function CreateModel() {
             )}
           </div>
         )}
-      </form>
     </div>
   );
 }

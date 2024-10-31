@@ -12,12 +12,18 @@ function Home() {
     if (loggedInUser) {
       setUserName(loggedInUser);
     }
-
+    const token = localStorage.getItem('accessToken');
     // 모델 데이터 가져오기
     const fetchModels = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/models'); // 모델 API 호출
+        const response = await axios.get('http://localhost:3000/models',{
+          headers: {
+            'Authorization': `Bearer ${token}`,
+          },
+        }); // 모델 API 호출
+
         setModels(response.data); // 모델 데이터 저장
+
       } catch (err) {
         console.error('모델 데이터를 가져오는 데 오류가 발생했습니다.', err); // 오류 발생 시 콘솔에 로그
       } finally {
@@ -80,10 +86,15 @@ function Home() {
         {models.length > 0 ? (
           models.map((model) => (
             <div key={model.id} className="m-4 border rounded-lg p-4 shadow-md w-64">
-              <h2 className="font-bold text-lg">{model.detail.detail}</h2>
-              <p>Phone: {model.detail.modelPhones[0]?.phone}</p>
-              <p>Created At: {new Date(model.createdAt).toLocaleString()}</p>
-              <p>Updated At: {new Date(model.updatedAt).toLocaleString()}</p>
+              <h2 
+              className="font-bold text-lg cursor-pointer" 
+              onClick={() => navigateTo(`/onemodel/${model.id}`)} // 클릭 시 모델 ID를 포함하여 이동
+              >
+              {model.detail.detail}
+              </h2>
+              <p>전화번호: {model.detail.modelPhones[0]?.phone}</p>
+              <p>생성날짜: {new Date(model.createdAt).toLocaleString()}</p>
+              <p>업데이트 날짜: {new Date(model.updatedAt).toLocaleString()}</p>
             </div>
           ))
         ) : (
