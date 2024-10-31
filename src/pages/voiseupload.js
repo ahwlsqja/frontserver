@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 
-function Upload() {
+function VoiseUpload() {
   const { id } = useParams(); // URL에서 ID 가져오기
   const [userName, setUserName] = useState('');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -42,7 +42,7 @@ function Upload() {
       formData.append('file', file);
   
       try {
-        const response = await axios.post(`http://localhost:3000/uploadS3/${id}`, formData, {
+        const response = await axios.post(`http://localhost:3000/models/voisedata/${id}`, formData, {
           headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'multipart/form-data',
@@ -95,7 +95,7 @@ function Upload() {
           className="border-2 border-purple-500 rounded-lg p-8 flex flex-col items-center justify-center cursor-pointer hover:shadow-lg transition-shadow duration-300"
           onClick={handleAddCustomVoice}
         >
-          <p className="text-xl text-purple-500 mb-4">커스텀 보이스 추가</p>
+          <p className="text-xl text-purple-500 mb-4">학습 시킬 목소리를 업로드 해주세요</p>
           <p className="text-4xl text-purple-500">+</p>
         </div>
         {/* 파일 입력 요소 (숨김 처리) */}
@@ -120,4 +120,4 @@ function Upload() {
   );
 }
 
-export default Upload;
+export default VoiseUpload;

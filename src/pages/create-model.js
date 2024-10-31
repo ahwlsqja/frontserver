@@ -102,7 +102,7 @@ function CreateModel() {
           </button>
         )}
         <button type="submit" className="bg-green-500 text-white rounded px-4 py-2">
-          create
+          생성하기
         </button>
       </form>
         {error && <p className="text-red-500 mt-4">{error}</p>}

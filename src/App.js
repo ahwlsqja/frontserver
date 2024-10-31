@@ -6,6 +6,8 @@ import Home from './pages/home';
 import Upload from './pages/upload';
 import CreateModel from './pages/create-model';
 import OneModel from './pages/onemodel';
+import ModelModify from './pages/modelmodify';
+import VoiseUpload from './pages/voiseupload';
 
 function Header() {
   const location = useLocation();
@@ -18,7 +20,7 @@ function Header() {
         {isHomePage ? (
           <Link to="/home" className="text-white">CareCall</Link>
         ) : (
-          <span className="text-white">CareCall</span>
+          <span className="text-white">CareVerse</span>
         )}
       </h1>
 
@@ -47,9 +49,13 @@ function App() {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/login" element={<Login />} />
           <Route path="/home" element={<Home />} />
-          <Route path="/upload" element={<Upload />} />
+          <Route path="/upload/:id" element={<Upload />} />
           <Route path="/create-model" element={<CreateModel />} />
           <Route path="/onemodel/:id" element={<OneModel />} /> {/* 모델 ID를 포함한 경로 */}
+          {/* 기존 라우트들 */}
+          <Route path="/modelmodify/:id" element={<ModelModify />} />
+          <Route path="/voiseupload/:id" element={<VoiseUpload />} />
+
         </Routes>
       </div>
     </Router>
